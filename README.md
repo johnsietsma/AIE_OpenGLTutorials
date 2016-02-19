@@ -1,1 +1,1 @@
-# OpenGLTutorial_RenderingGeometry
+# AIE OpenGL Tutorials
