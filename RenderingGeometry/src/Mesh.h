@@ -4,9 +4,13 @@
 
 struct Vertex;
 
+/*
+    A Mesh encapsulates OpenGL buffers and a vertex array that are required to render geometry.
+*/
 class Mesh
 {
 public:
+    // Create the mesh from the given Vertices and indices.
     Mesh(Vertex* pVertices, unsigned int vertCount, unsigned int* pIndices, unsigned int indexCount);
     ~Mesh();
 
@@ -19,5 +23,4 @@ private:
     GLuint 	m_VBO;
     GLuint	m_IBO;
     GLuint  m_indexCount;
-
 };

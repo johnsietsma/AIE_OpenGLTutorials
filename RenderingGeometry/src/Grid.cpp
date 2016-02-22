@@ -30,22 +30,26 @@ void Grid::create()
     // -- Generate grid indices 
 
     // defining index count based off quad count (2 triangles per quad)
-    const int indexCount = (m_rowCount - 1) * (m_columnCount - 1) * 6;
+    const int indexCount = getIndexCount();
     m_pIndices = new unsigned int[indexCount];
 
     unsigned int index = 0;
     for (unsigned int rowIndex = 0; rowIndex < (m_rowCount - 1); ++rowIndex) {
         for (unsigned int columnIndex = 0; columnIndex < (m_columnCount - 1); ++columnIndex) {
             // triangle 1
-            int triangleStartIndex = rowIndex * m_columnCount + columnIndex;
+            unsigned int triangleStartIndex = rowIndex * m_columnCount + columnIndex;
+            unsigned int triangleNextColumnIndex = rowIndex * m_columnCount + (columnIndex + 1);
+            unsigned int triangleNextRowIndex = (rowIndex + 1) * m_columnCount + columnIndex;
+            unsigned int triangleNextRowNextColumnIndex = triangleNextRowIndex + 1;
+
             m_pIndices[index++] = triangleStartIndex;
-            m_pIndices[index++] = (rowIndex + 1) * m_columnCount + columnIndex;
-            m_pIndices[index++] = (rowIndex + 1) * m_columnCount + (columnIndex + 1);
+            m_pIndices[index++] = triangleNextRowIndex;
+            m_pIndices[index++] = triangleNextRowNextColumnIndex;
 
             // triangle 2
-            m_pIndices[index++] = rowIndex * m_columnCount + columnIndex;
-            m_pIndices[index++] = (rowIndex + 1) * m_columnCount + (columnIndex + 1);
-            m_pIndices[index++] = rowIndex * m_columnCount + (columnIndex + 1);
+            m_pIndices[index++] = triangleStartIndex;
+            m_pIndices[index++] = triangleNextRowNextColumnIndex;
+            m_pIndices[index++] = triangleNextColumnIndex;
         }
     }
 }

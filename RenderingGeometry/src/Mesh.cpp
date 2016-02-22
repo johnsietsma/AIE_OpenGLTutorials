@@ -28,7 +28,6 @@ Mesh::Mesh(Vertex* pVertices, unsigned int vertCount, unsigned int* pIndices, un
     unsigned int indexByteSize = indexCount * sizeof(unsigned int);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexByteSize, pIndices, GL_STATIC_DRAW);
 
-
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
     glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(offsetof(Vertex, position)));
