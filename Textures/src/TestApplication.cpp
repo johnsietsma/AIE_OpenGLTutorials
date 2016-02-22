@@ -67,7 +67,7 @@ bool TestApplication::startup() {
 					out vec4 FragColor; \
 					uniform sampler2D diffuse; \
 					void main() { \
-                    FragColor = texture(diffuse,vTexCoord);\ }";
+                    FragColor = texture(diffuse,vTexCoord); }";
 
     unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertexShader, 1, (const char**)&vsSource, 0);
