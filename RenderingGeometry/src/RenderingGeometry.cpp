@@ -7,54 +7,18 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "Camera.h"
+#include "Grid.h"
 #include "Gizmos.h"
+#include "Vertex.h"
 
 using glm::vec3;
 using glm::vec4;
 using glm::mat4;
 
-struct Vertex {
-    vec4 position;
-    vec4 colour;
-};
 
-void RenderingGeometry::generateGrid(unsigned int rows, unsigned int cols)
+void RenderingGeometry::generateOpenGLBuffers(Vertex* pVertices, unsigned int vertCount, unsigned int* pIndices, unsigned int indexCount)
 {
-    m_rows = rows;
-    m_cols = cols;
-
-    Vertex* aoVertices = new Vertex[rows * cols];
-    for (unsigned int r = 0; r < rows; ++r) {
-        for (unsigned int c = 0; c < cols; ++c) {
-            aoVertices[r * cols + c].position = vec4(
-                (float)c, 0, (float)r, 1);
-
-            // create some arbitrary colour based off something 
-            // that might not be related to tiling a texture
-            vec3 colour = vec3(sinf((c / (float)(cols - 1)) *
-                (r / (float)(rows - 1))));
-            aoVertices[r * cols + c].colour = vec4(colour, 1);
-        }
-    }
-
-    // defining index count based off quad count (2 triangles per quad)
-    unsigned int* auiIndices = new unsigned int[(rows - 1) * (cols - 1) * 6];
-
-    unsigned int index = 0;
-    for (unsigned int r = 0; r < (rows - 1); ++r) {
-        for (unsigned int c = 0; c < (cols - 1); ++c) {
-            // triangle 1
-            auiIndices[index++] = r * cols + c;
-            auiIndices[index++] = (r + 1) * cols + c;
-            auiIndices[index++] = (r + 1) * cols + (c + 1);
-
-            // triangle 2
-            auiIndices[index++] = r * cols + c;
-            auiIndices[index++] = (r + 1) * cols + (c + 1);
-            auiIndices[index++] = r * cols + (c + 1);
-        }
-    }
-
+    // -- Generate buffers ---
     // create and bind buffers to a vertex array object
     glGenBuffers(1, &m_VBO);
     glGenBuffers(1, &m_IBO);
@@ -64,28 +28,28 @@ void RenderingGeometry::generateGrid(unsigned int rows, unsigned int cols)
 
     glBindVertexArray(m_VAO);
 
+    unsigned int vertBytesSize = vertCount * sizeof(Vertex);
     glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-    glBufferData(GL_ARRAY_BUFFER, (rows * cols) * sizeof(Vertex),
-        aoVertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, vertBytesSize, pVertices, GL_STATIC_DRAW);
 
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, (rows - 1) * (cols - 1) * 6 * sizeof(unsigned int), auiIndices, GL_STATIC_DRAW);
+    unsigned int indexByteSize = indexCount * sizeof(unsigned int);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexByteSize, pIndices, GL_STATIC_DRAW);
 
 
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
     glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
-    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex),
-        (void*)(sizeof(vec4)));
+    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(vec4)));
 
     glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-    delete[] aoVertices;
-}
 
+
+}
 
 RenderingGeometry::RenderingGeometry()
 	: m_camera(nullptr) 
@@ -110,7 +74,9 @@ bool RenderingGeometry::startup()
 	m_camera = new Camera(glm::radians(45.f), windowSize.x/(float)windowSize.y, 0.1f, 1000.f);
 	m_camera->setLookAtFrom(vec3(10, 10, 10), vec3(0));
 
-    generateGrid(10, 10);
+    Grid grid(10, 10);
+    generateOpenGLBuffers(grid.getVertices(), grid.getVertexCount(), grid.getIndices(), grid.getIndexCount());
+    m_indexCount = grid.getIndexCount();
 
     // create shaders
     const char* vsSource = "#version 410\n \
@@ -142,6 +108,7 @@ bool RenderingGeometry::startup()
     glAttachShader(m_programID, fragmentShader);
     glLinkProgram(m_programID);
 
+    // Check for program link error
     glGetProgramiv(m_programID, GL_LINK_STATUS, &success);
     if (success == GL_FALSE) {
         int infoLogLength = 0;
@@ -220,8 +187,7 @@ void RenderingGeometry::draw() {
     glUniform1f(heightScaleUniform, 1);
 
     glBindVertexArray(m_VAO);
-    unsigned int indexCount = (m_rows - 1) * (m_cols - 1) * 6;
-    glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, m_indexCount, GL_UNSIGNED_INT, 0);
 
 
 	// display the 3D gizmos

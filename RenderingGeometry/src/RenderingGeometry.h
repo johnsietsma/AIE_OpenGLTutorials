@@ -2,7 +2,10 @@
 
 #include "BaseApplication.h"
 
+#include "Grid.h"
+
 class Camera;
+struct Vertex;
 
 class RenderingGeometry : public BaseApplication {
 public:
@@ -17,19 +20,17 @@ public:
 	virtual void draw() override;
 
 private:
-    void generateGrid(unsigned int rows, unsigned int cols);
+    void generateOpenGLBuffers(Vertex* pVertices, unsigned int vertCount, unsigned int* pIndices, unsigned int indexCount);
 
-	Camera*		m_camera;
+    Camera* m_camera;
 
     // our vertex and index buffers
     unsigned int	m_VAO;
     unsigned int 	m_VBO;
     unsigned int	m_IBO;
+    unsigned int    m_indexCount;
 
     unsigned int m_programID;
-
-    int m_rows;
-    int m_cols;
 
     float m_timer = 0;
 };
