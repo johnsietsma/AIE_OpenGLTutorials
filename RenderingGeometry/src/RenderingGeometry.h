@@ -3,11 +3,11 @@
 #include "BaseApplication.h"
 
 #include "Grid.h"
-
 #include <memory>
 
 class Camera;
 class Mesh;
+class Program;
 struct Vertex;
 
 class RenderingGeometry : public BaseApplication {
@@ -27,8 +27,7 @@ private:
 
     std::shared_ptr<Camera> m_camera;
     std::shared_ptr<Mesh> m_mesh;
-
-    unsigned int m_programID;
+    std::shared_ptr<Program> m_program;
 
     float m_timer = 0;
 };

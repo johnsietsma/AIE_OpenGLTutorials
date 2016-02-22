@@ -26,6 +26,7 @@
     <ClCompile Include="src\Grid.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Mesh.cpp" />
+    <ClCompile Include="src\Program.cpp" />
     <ClCompile Include="src\RenderingGeometry.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -35,6 +36,7 @@
     <ClInclude Include="src\gl_core_4_4.h" />
     <ClInclude Include="src\Grid.h" />
     <ClInclude Include="src\Mesh.h" />
+    <ClInclude Include="src\Program.h" />
     <ClInclude Include="src\RenderingGeometry.h" />
     <ClInclude Include="src\Vertex.h" />
   </ItemGroup>

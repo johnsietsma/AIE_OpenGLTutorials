@@ -10,6 +10,7 @@
 #include "Grid.h"
 #include "Gizmos.h"
 #include "Mesh.h"
+#include "Program.h"
 #include "Vertex.h"
 
 using glm::vec3;
@@ -40,7 +41,11 @@ bool RenderingGeometry::startup()
 	m_camera = std::make_shared<Camera>(glm::radians(45.f), windowSize.x/(float)windowSize.y, 0.1f, 1000.f);
 	m_camera->setLookAtFrom(vec3(10, 10, 10), vec3(0));
 
+    // Create a grid of 10 columns and rows.
+    // We only need a local variable as we'll copy the data over into a Mesh.
     Grid grid(10, 10);
+
+    // Make the mesh from the grid data. We don't need the grid after this.
     m_mesh = std::make_shared<Mesh>(grid.getVertices(), grid.getVertexCount(), grid.getIndices(), grid.getIndexCount());
 
     // create shaders
@@ -59,36 +64,7 @@ bool RenderingGeometry::startup()
 				void main()	{ FragColor = vColour; }";
 
 
-    int success = GL_FALSE;
-    unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
-    unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-
-    glShaderSource(vertexShader, 1, (const char**)&vsSource, 0);
-    glCompileShader(vertexShader);
-    glShaderSource(fragmentShader, 1, (const char**)&fsSource, 0);
-    glCompileShader(fragmentShader);
-
-    m_programID = glCreateProgram();
-    glAttachShader(m_programID, vertexShader);
-    glAttachShader(m_programID, fragmentShader);
-    glLinkProgram(m_programID);
-
-    // Check for program link error
-    glGetProgramiv(m_programID, GL_LINK_STATUS, &success);
-    if (success == GL_FALSE) {
-        int infoLogLength = 0;
-        glGetProgramiv(m_programID, GL_INFO_LOG_LENGTH, &infoLogLength);
-        char* infoLog = new char[infoLogLength];
-
-        glGetProgramInfoLog(m_programID, infoLogLength, 0, infoLog);
-        printf("Error: Failed to link shader program!\n");
-        printf("%s\n", infoLog);
-        delete[] infoLog;
-    }
-
-    glDeleteShader(fragmentShader);
-    glDeleteShader(vertexShader);
-
+    m_program = std::make_shared<Program>(vsSource, fsSource);
 
 	return true;
 }
@@ -140,14 +116,14 @@ void RenderingGeometry::draw() {
 
     glm::mat4 projectionViewMatrix = m_camera->getProjectionView();
 
-    glUseProgram(m_programID);
-    unsigned int projectionViewUniform = glGetUniformLocation(m_programID, "ProjectionView");
+    glUseProgram(m_program->getId());
+    unsigned int projectionViewUniform = glGetUniformLocation(m_program->getId(), "ProjectionView");
     glUniformMatrix4fv(projectionViewUniform, 1, false, glm::value_ptr(projectionViewMatrix));
 
-    unsigned int timeUniform = glGetUniformLocation(m_programID, "time");
+    unsigned int timeUniform = glGetUniformLocation(m_program->getId(), "time");
     glUniform1f(timeUniform, m_timer);
 
-    unsigned int heightScaleUniform = glGetUniformLocation(m_programID, "heightScale");
+    unsigned int heightScaleUniform = glGetUniformLocation(m_program->getId(), "heightScale");
     glUniform1f(heightScaleUniform, 1);
 
     glBindVertexArray(m_mesh->getVAO());
