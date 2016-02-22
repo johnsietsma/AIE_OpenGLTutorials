@@ -4,7 +4,10 @@
 
 #include "Grid.h"
 
+#include <memory>
+
 class Camera;
+class Mesh;
 struct Vertex;
 
 class RenderingGeometry : public BaseApplication {
@@ -22,13 +25,8 @@ public:
 private:
     void generateOpenGLBuffers(Vertex* pVertices, unsigned int vertCount, unsigned int* pIndices, unsigned int indexCount);
 
-    Camera* m_camera;
-
-    // our vertex and index buffers
-    unsigned int	m_VAO;
-    unsigned int 	m_VBO;
-    unsigned int	m_IBO;
-    unsigned int    m_indexCount;
+    std::shared_ptr<Camera> m_camera;
+    std::shared_ptr<Mesh> m_mesh;
 
     unsigned int m_programID;
 

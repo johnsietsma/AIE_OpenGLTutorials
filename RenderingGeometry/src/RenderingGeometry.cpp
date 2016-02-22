@@ -9,47 +9,13 @@
 #include "Camera.h"
 #include "Grid.h"
 #include "Gizmos.h"
+#include "Mesh.h"
 #include "Vertex.h"
 
 using glm::vec3;
 using glm::vec4;
 using glm::mat4;
 
-
-void RenderingGeometry::generateOpenGLBuffers(Vertex* pVertices, unsigned int vertCount, unsigned int* pIndices, unsigned int indexCount)
-{
-    // -- Generate buffers ---
-    // create and bind buffers to a vertex array object
-    glGenBuffers(1, &m_VBO);
-    glGenBuffers(1, &m_IBO);
-
-    //Add the following line to generate a VertexArrayObject
-    glGenVertexArrays(1, &m_VAO);
-
-    glBindVertexArray(m_VAO);
-
-    unsigned int vertBytesSize = vertCount * sizeof(Vertex);
-    glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-    glBufferData(GL_ARRAY_BUFFER, vertBytesSize, pVertices, GL_STATIC_DRAW);
-
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
-    unsigned int indexByteSize = indexCount * sizeof(unsigned int);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexByteSize, pIndices, GL_STATIC_DRAW);
-
-
-    glEnableVertexAttribArray(0);
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
-    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(vec4)));
-
-    glBindVertexArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-
-
-}
 
 RenderingGeometry::RenderingGeometry()
 	: m_camera(nullptr) 
@@ -71,12 +37,11 @@ bool RenderingGeometry::startup()
 	Gizmos::create();
 
 	// create a camera
-	m_camera = new Camera(glm::radians(45.f), windowSize.x/(float)windowSize.y, 0.1f, 1000.f);
+	m_camera = std::make_shared<Camera>(glm::radians(45.f), windowSize.x/(float)windowSize.y, 0.1f, 1000.f);
 	m_camera->setLookAtFrom(vec3(10, 10, 10), vec3(0));
 
     Grid grid(10, 10);
-    generateOpenGLBuffers(grid.getVertices(), grid.getVertexCount(), grid.getIndices(), grid.getIndexCount());
-    m_indexCount = grid.getIndexCount();
+    m_mesh = std::make_shared<Mesh>(grid.getVertices(), grid.getVertexCount(), grid.getIndices(), grid.getIndexCount());
 
     // create shaders
     const char* vsSource = "#version 410\n \
@@ -131,7 +96,6 @@ bool RenderingGeometry::startup()
 void RenderingGeometry::shutdown() 
 {
 	// delete our camera and cleanup gizmos
-	delete m_camera;
 	Gizmos::destroy();
 
 	// destroy our window properly
@@ -186,8 +150,8 @@ void RenderingGeometry::draw() {
     unsigned int heightScaleUniform = glGetUniformLocation(m_programID, "heightScale");
     glUniform1f(heightScaleUniform, 1);
 
-    glBindVertexArray(m_VAO);
-    glDrawElements(GL_TRIANGLES, m_indexCount, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(m_mesh->getVAO());
+    glDrawElements(GL_TRIANGLES, m_mesh->getIndexCount(), GL_UNSIGNED_INT, 0);
 
 
 	// display the 3D gizmos
