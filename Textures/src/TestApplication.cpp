@@ -8,15 +8,16 @@
 #include "Camera.h"
 #include "Gizmos.h"
 
-#define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
+#include "Vertex.h"
+
 
 using glm::vec3;
 using glm::vec4;
 using glm::mat4;
 
 TestApplication::TestApplication()
-	: m_camera(nullptr) {
+	: m_camera(nullptr)
+{
 
 }
 
@@ -35,22 +36,10 @@ bool TestApplication::startup() {
 	Gizmos::create();
 
 	// create a camera
-	m_camera = new Camera(glm::radians(45.f), windowSize.x/(float)windowSize.y, 0.1f, 1000.f);
+	m_camera = std::make_shared<Camera>(glm::radians(45.f), windowSize.x/(float)windowSize.y, 0.1f, 1000.f);
 	m_camera->setLookAtFrom(vec3(10, 10, 10), vec3(0));
 	
-    int imageWidth = 0, imageHeight = 0, imageFormat = 0;
-
-    unsigned char* data = stbi_load("../data/textures/crate.png",
-        &imageWidth, &imageHeight, &imageFormat, STBI_default);
-
-    glGenTextures(1, &m_texture);
-    glBindTexture(GL_TEXTURE_2D, m_texture);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, imageWidth, imageHeight,
-        0, GL_RGB, GL_UNSIGNED_BYTE, data);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-
-    stbi_image_free(data);
+    if (!m_texture.load("../data/textures/crate.png")) return false;
 
     const char* vsSource = "#version 410\n \
 					layout(location=0) in vec4 Position; \
@@ -69,67 +58,27 @@ bool TestApplication::startup() {
 					void main() { \
                     FragColor = texture(diffuse,vTexCoord); }";
 
-    unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertexShader, 1, (const char**)&vsSource, 0);
-    glCompileShader(vertexShader);
+    m_program.create(vsSource, fsSource);
 
-    unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragmentShader, 1, (const char**)&fsSource, 0);
-    glCompileShader(fragmentShader);
-
-    m_program = glCreateProgram();
-    glAttachShader(m_program, vertexShader);
-    glAttachShader(m_program, fragmentShader);
-    glLinkProgram(m_program);
-
-    glDeleteShader(vertexShader);
-    glDeleteShader(fragmentShader);
-
-
-    float vertexData[] = {
-        -5, 0, 5, 1, 0, 1,
-        5, 0, 5, 1, 1, 1,
-        5, 0, -5, 1, 1, 0,
-        -5, 0, -5, 1, 0, 0,
+    Vertex_TexCoord pVertexData[] = {
+        { glm::vec4(-5, 0, 5, 1), glm::vec2(0, 1) },
+        { glm::vec4(5, 0, 5, 1), glm::vec2(1, 1) },
+        { glm::vec4(5, 0, -5, 1), glm::vec2(1, 0) },
+        { glm::vec4(-5, 0, -5, 1), glm::vec2(0, 0) },
     };
 
-    unsigned int indexData[] = {
+    unsigned int pIndexData[] = {
         0, 1, 2,
         0, 2, 3,
     };
 
-    glGenVertexArrays(1, &m_vao);
-    glBindVertexArray(m_vao);
+    m_mesh.create(pVertexData, 4, pIndexData, 6);
 
-    glGenBuffers(1, &m_vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6 * 4,
-        vertexData, GL_STATIC_DRAW);
-
-    glGenBuffers(1, &m_ibo);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * 6,
-        indexData, GL_STATIC_DRAW);
-
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE,
-        sizeof(float) * 6, 0);
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE,
-        sizeof(float) * 6, ((char*)0) + 16);
-
-    glBindVertexArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-
-
-	return true;
+ 	return true;
 }
 
 void TestApplication::shutdown() {
 	// delete our camera and cleanup gizmos
-	delete m_camera;
 	Gizmos::destroy();
 
 	// destroy our window properly
@@ -170,24 +119,24 @@ void TestApplication::draw() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // use our texture program
-    glUseProgram(m_program);
+    glUseProgram(m_program.getId());
 
     // bind the camera
-    int loc = glGetUniformLocation(m_program, "ProjectionView");
+    int loc = glGetUniformLocation(m_program.getId(), "ProjectionView");
     glUniformMatrix4fv(loc, 1, GL_FALSE,
         &(m_camera->getProjectionView()[0][0]));
 
     // set texture slot
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, m_texture);
+    glBindTexture(GL_TEXTURE_2D, m_texture.getId());
 
     // tell the shader where it is
-    loc = glGetUniformLocation(m_program, "diffuse");
+    loc = glGetUniformLocation(m_program.getId(), "diffuse");
     glUniform1i(loc, 0);
 
     // draw
-    glBindVertexArray(m_vao);
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+    glBindVertexArray(m_mesh.getVAO());
+    glDrawElements(GL_TRIANGLES, m_mesh.getIndexCount(), GL_UNSIGNED_INT, nullptr);
 
 
 	// display the 3D gizmos

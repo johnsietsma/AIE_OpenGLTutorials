@@ -2,6 +2,12 @@
 
 #include "BaseApplication.h"
 
+#include "Program.h"
+#include "Mesh.h"
+#include "Texture.h"
+
+#include <memory>
+
 class Camera;
 
 class TestApplication : public BaseApplication {
@@ -18,10 +24,13 @@ public:
 
 private:
 
-	Camera*		m_camera;
-    unsigned int m_texture;
-    unsigned int m_program;
-    unsigned int m_vao;
-    unsigned int m_vbo;
-    unsigned int m_ibo;
+	std::shared_ptr<Camera>		m_camera;
+
+    Program m_program;
+    Mesh m_mesh;
+    Texture m_texture;
+
+    //unsigned int m_vao;
+    //unsigned int m_vbo;
+    //unsigned int m_ibo;
 };
