@@ -42,7 +42,11 @@ bool FBXLighting::startup() {
 					in vec4 vNormal; \
 					out vec4 FragColor; \
 					void main() { \
-					FragColor = vec4(1,1,1,1); }";
+					float d = max(0, \
+                    dot( normalize(vNormal.xyz), \
+                    vec3(0,1,0) ) ); \
+					FragColor = vec4(d,d,d,1); }";
+
 
     unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertexShader, 1, (const char**)&vsSource, 0);
