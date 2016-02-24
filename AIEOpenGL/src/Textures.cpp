@@ -1,4 +1,4 @@
-#include "TestApplication.h"
+#include "Textures.h"
 #include "gl_core_4_4.h"
 
 #include <GLFW/glfw3.h>
@@ -15,21 +15,21 @@ using glm::vec3;
 using glm::vec4;
 using glm::mat4;
 
-TestApplication::TestApplication()
+Textures::Textures()
 	: m_camera(nullptr) {
 
 }
 
-TestApplication::~TestApplication() {
+Textures::~Textures() {
 
 }
 
-bool TestApplication::startup() {
+bool Textures::startup() {
 
 
 	// create a basic window
 	const glm::ivec2 windowSize(1024, 768);
-	createWindow("AIE OpenGL Application", windowSize.x, windowSize.y);
+	createWindow("Tutorial - Textures", windowSize.x, windowSize.y);
 
 	// start the gizmo system that can draw basic shapes
 	Gizmos::create();
@@ -40,7 +40,7 @@ bool TestApplication::startup() {
 	
     int imageWidth = 0, imageHeight = 0, imageFormat = 0;
 
-    unsigned char* data = stbi_load("../data/textures/crate.png",
+    unsigned char* data = stbi_load("data/textures/crate.png",
         &imageWidth, &imageHeight, &imageFormat, STBI_default);
 
     glGenTextures(1, &m_texture);
@@ -127,7 +127,7 @@ bool TestApplication::startup() {
 	return true;
 }
 
-void TestApplication::shutdown() {
+void Textures::shutdown() {
 	// delete our camera and cleanup gizmos
 	delete m_camera;
 	Gizmos::destroy();
@@ -136,7 +136,7 @@ void TestApplication::shutdown() {
 	destroyWindow();
 }
 
-bool TestApplication::update(float deltaTime) {
+bool Textures::update(float deltaTime) {
 	
 	// close the application if the window closes
 	if (glfwWindowShouldClose(m_window) ||
@@ -164,7 +164,7 @@ bool TestApplication::update(float deltaTime) {
 	return true;
 }
 
-void TestApplication::draw() {
+void Textures::draw() {
 
 	// clear the screen for this frame
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

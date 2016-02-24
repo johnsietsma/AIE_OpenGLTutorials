@@ -4,11 +4,11 @@
 
 class Camera;
 
-class TestApplication : public BaseApplication {
+class Textures : public BaseApplication {
 public:
 
-	TestApplication();
-	virtual ~TestApplication();
+    Textures();
+	virtual ~Textures();
 
 	virtual bool startup();
 	virtual void shutdown();

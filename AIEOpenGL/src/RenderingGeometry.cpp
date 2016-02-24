@@ -18,6 +18,16 @@ struct Vertex {
     vec4 colour;
 };
 
+RenderingGeometry::RenderingGeometry()
+    : m_camera(nullptr)
+{
+}
+
+RenderingGeometry::~RenderingGeometry()
+{
+
+}
+
 void RenderingGeometry::generateGrid(unsigned int rows, unsigned int cols)
 {
     m_rows = rows;
@@ -86,22 +96,11 @@ void RenderingGeometry::generateGrid(unsigned int rows, unsigned int cols)
     delete[] aoVertices;
 }
 
-
-RenderingGeometry::RenderingGeometry()
-	: m_camera(nullptr) 
-{
-}
-
-RenderingGeometry::~RenderingGeometry() 
-{
-
-}
-
 bool RenderingGeometry::startup() 
 {
 	// create a basic window
 	const glm::ivec2 windowSize(1024, 768);
-	createWindow("AIE OpenGL Application", windowSize.x, windowSize.y);
+	createWindow("Tutorial - Rendering Geometry", windowSize.x, windowSize.y);
 
 	// start the gizmo system that can draw basic shapes
 	Gizmos::create();
