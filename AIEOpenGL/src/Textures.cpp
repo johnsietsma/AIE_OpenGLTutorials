@@ -8,35 +8,20 @@
 #include "Camera.h"
 #include "Gizmos.h"
 
-#define STB_IMAGE_IMPLEMENTATION
+//#define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
 using glm::vec3;
 using glm::vec4;
 using glm::mat4;
 
-Textures::Textures()
-	: m_camera(nullptr) {
-
-}
-
-Textures::~Textures() {
-
-}
-
 bool Textures::startup() {
 
 
 	// create a basic window
 	const glm::ivec2 windowSize(1024, 768);
-	createWindow("Tutorial - Textures", windowSize.x, windowSize.y);
+	createWindow("Tutorial - Textures", 1024, 768);
 
-	// start the gizmo system that can draw basic shapes
-	Gizmos::create();
-
-	// create a camera
-	m_camera = new Camera(glm::radians(45.f), windowSize.x/(float)windowSize.y, 0.1f, 1000.f);
-	m_camera->setLookAtFrom(vec3(10, 10, 10), vec3(0));
 	
     int imageWidth = 0, imageHeight = 0, imageFormat = 0;
 
@@ -128,10 +113,6 @@ bool Textures::startup() {
 }
 
 void Textures::shutdown() {
-	// delete our camera and cleanup gizmos
-	delete m_camera;
-	Gizmos::destroy();
-
 	// destroy our window properly
 	destroyWindow();
 }

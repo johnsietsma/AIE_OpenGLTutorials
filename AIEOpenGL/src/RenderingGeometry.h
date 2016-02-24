@@ -6,10 +6,6 @@ class Camera;
 
 class RenderingGeometry : public BaseApplication {
 public:
-
-	RenderingGeometry();
-	virtual ~RenderingGeometry();
-
 	virtual bool startup() override;
 	virtual void shutdown() override;
 
@@ -18,8 +14,6 @@ public:
 
 private:
     void generateGrid(unsigned int rows, unsigned int cols);
-
-	Camera*		m_camera;
 
     // our vertex and index buffers
     unsigned int	m_VAO;

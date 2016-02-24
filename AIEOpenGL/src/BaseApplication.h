@@ -1,5 +1,6 @@
 #pragma once
 
+class Camera;
 struct GLFWwindow;
 
 class BaseApplication {
@@ -22,4 +23,5 @@ protected:
 	virtual void destroyWindow();
 
 	GLFWwindow*	m_window;
+    Camera*		m_camera;
 };

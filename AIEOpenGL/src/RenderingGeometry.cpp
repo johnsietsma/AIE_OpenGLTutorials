@@ -18,16 +18,6 @@ struct Vertex {
     vec4 colour;
 };
 
-RenderingGeometry::RenderingGeometry()
-    : m_camera(nullptr)
-{
-}
-
-RenderingGeometry::~RenderingGeometry()
-{
-
-}
-
 void RenderingGeometry::generateGrid(unsigned int rows, unsigned int cols)
 {
     m_rows = rows;
@@ -99,15 +89,7 @@ void RenderingGeometry::generateGrid(unsigned int rows, unsigned int cols)
 bool RenderingGeometry::startup() 
 {
 	// create a basic window
-	const glm::ivec2 windowSize(1024, 768);
-	createWindow("Tutorial - Rendering Geometry", windowSize.x, windowSize.y);
-
-	// start the gizmo system that can draw basic shapes
-	Gizmos::create();
-
-	// create a camera
-	m_camera = new Camera(glm::radians(45.f), windowSize.x/(float)windowSize.y, 0.1f, 1000.f);
-	m_camera->setLookAtFrom(vec3(10, 10, 10), vec3(0));
+	createWindow("Tutorial - Rendering Geometry", 1024, 768);
 
     generateGrid(10, 10);
 
@@ -162,10 +144,6 @@ bool RenderingGeometry::startup()
 
 void RenderingGeometry::shutdown() 
 {
-	// delete our camera and cleanup gizmos
-	delete m_camera;
-	Gizmos::destroy();
-
 	// destroy our window properly
 	destroyWindow();
 }

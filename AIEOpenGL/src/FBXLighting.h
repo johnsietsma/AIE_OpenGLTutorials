@@ -3,9 +3,14 @@
 #include "BaseApplication.h"
 
 class Camera;
+class FBXFile;
 
-class Textures : public BaseApplication {
+class FBXLighting : public BaseApplication {
 public:
+
+    FBXLighting();
+	virtual ~FBXLighting();
+
 	virtual bool startup();
 	virtual void shutdown();
 
@@ -13,8 +18,10 @@ public:
 	virtual void draw();
 
 private:
+    void createOpenGLBuffers(FBXFile* fbx);
+    void cleanupOpenGLBuffers(FBXFile* fbx);
 
-    unsigned int m_texture;
+    FBXFile* m_fbx;
     unsigned int m_program;
     unsigned int m_vao;
     unsigned int m_vbo;

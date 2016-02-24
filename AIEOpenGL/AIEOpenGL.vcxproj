@@ -20,7 +20,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BaseApplication.cpp" />
+    <ClCompile Include="src\Blank.cpp" />
     <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\FBXLighting.cpp" />
     <ClCompile Include="src\Gizmos.cpp" />
     <ClCompile Include="src\gl_core_4_4.c" />
     <ClCompile Include="src\main.cpp" />
@@ -29,7 +31,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\BaseApplication.h" />
+    <ClInclude Include="src\Blank.h" />
     <ClInclude Include="src\Camera.h" />
+    <ClInclude Include="src\FBXLighting.h" />
     <ClInclude Include="src\Gizmos.h" />
     <ClInclude Include="src\gl_core_4_4.h" />
     <ClInclude Include="src\RenderingGeometry.h" />
@@ -89,8 +93,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)dep/glm;$(SolutionDir)dep/glfw/include;$(SolutionDir)dep/stb;$(SolutionDir)dep/imgui;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)dep/glfw/lib-vc2015;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
+    <IncludePath>$(SolutionDir)dep/glm;$(SolutionDir)dep/glfw/include;$(SolutionDir)dep/stb;$(SolutionDir)dep/FBXLoader;$(SolutionDir)dep/imgui;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)dep/FBXLoader;$(SolutionDir)dep/glfw/lib-vc2015;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
     <OutDir>$(SolutionDir)bin\</OutDir>
     <TargetName>$(ProjectName)_d</TargetName>
   </PropertyGroup>
@@ -99,8 +103,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)dep/glm;$(SolutionDir)dep/glfw/include;$(SolutionDir)dep/stb;$(SolutionDir)dep/imgui;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)dep/glfw/lib-vc2015;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
+    <IncludePath>$(SolutionDir)dep/glm;$(SolutionDir)dep/glfw/include;$(SolutionDir)dep/stb;$(SolutionDir)dep/FBXLoader;$(SolutionDir)dep/imgui;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)dep/FBXLoader;$(SolutionDir)dep/glfw/lib-vc2015;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
     <OutDir>$(SolutionDir)bin\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -117,7 +121,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>FBXLoader_d.lib;opengl32.lib;glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -148,7 +152,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>FBXLoader.lib;opengl32.lib;glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

@@ -1,3 +1,5 @@
+#include "Blank.h"
+#include "FBXLighting.h"
 #include "RenderingGeometry.h"
 #include "Textures.h"
 
@@ -5,7 +7,7 @@
 
 int main() {
 	
-	BaseApplication* app = new Textures();
+	BaseApplication* app = new FBXLighting();
 	if (app->startup())
 		app->run();
 	app->shutdown();

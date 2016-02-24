@@ -1,4 +1,7 @@
 #include "BaseApplication.h"
+
+#include "Camera.h"
+#include "Gizmos.h"
 #include "gl_core_4_4.h"
 
 #include <assert.h>
@@ -43,11 +46,23 @@ bool BaseApplication::createWindow(const char* title, int width, int height) {
 
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
-	
+
+    // create a camera
+    m_camera = new Camera(glm::radians(45.f), width / (float)height, 0.1f, 1000.f);
+    m_camera->setLookAtFrom(glm::vec3(10, 10, 10), glm::vec3(0));
+
+    // start the gizmo system that can draw basic shapes
+    Gizmos::create();
+
+
 	return true;
 }
 
-void BaseApplication::destroyWindow() {
+void BaseApplication::destroyWindow() 
+{
+    // delete our camera and cleanup gizmos
+    delete m_camera;
+    Gizmos::destroy();
 
 	glfwDestroyWindow(m_window);
 	glfwTerminate();
