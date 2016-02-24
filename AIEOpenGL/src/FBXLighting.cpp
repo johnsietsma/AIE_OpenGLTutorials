@@ -22,8 +22,8 @@ FBXLighting::~FBXLighting() {
 }
 
 bool FBXLighting::startup() {
-	// create a basic window
-	createWindow("Tutorial - FBXLighting", 1024, 768);
+    // create a basic window
+    createWindow("Tutorial - FBXLighting", 1024, 768);
 
 
     m_fbx = new FBXFile();
@@ -31,25 +31,35 @@ bool FBXLighting::startup() {
     createOpenGLBuffers(m_fbx);
 
     const char* vsSource = "#version 410\n \
-					layout(location=0) in vec4 Position; \
-					layout(location=1) in vec4 Normal; \
-					out vec4 vNormal; \
-					out vec4 vPosition; \
-					uniform mat4 ProjectionView; \
-					void main() { vNormal = Normal; \
-					vPosition = Position; \
+                    layout(location=0) in vec4 Position; \
+                    layout(location=1) in vec4 Normal; \
+                    out vec4 vNormal; \
+                    out vec4 vPosition; \
+                    uniform mat4 ProjectionView; \
+                    void main() { vNormal = Normal; \
+                    vPosition = Position; \
                     gl_Position = ProjectionView*Position; }";
 
     const char* fsSource = "#version 410\n \
-					in vec4 vNormal; \
-					in vec4 vPosition; \
-					out vec4 FragColor; \
-					uniform vec3 LightDir; \
-					uniform vec3 LightColour; \
-					void main() { \
-					float d = max(0, \
+                    in vec4 vNormal; \
+                    in vec4 vPosition; \
+                    out vec4 FragColor; \
+                    uniform vec3 LightDir; \
+                    uniform vec3 LightColour; \
+                    uniform vec3 CameraPos; \
+                    uniform float SpecPow; \
+                    void main() { \
+                    float d = max(0, \
                     dot(normalize(vNormal.xyz),LightDir ) ); \
-					FragColor = vec4(LightColour * d,1); }";
+                    vec3 E = normalize( CameraPos - \
+                    vPosition.xyz );\
+                    vec3 R = reflect( -LightDir, \
+                    vNormal.xyz ); \
+                    float s = max( 0, dot( E, R ) ); \
+                    s = pow( s, SpecPow ); \
+                    FragColor = vec4( LightColour * d + \
+                    LightColour * s, 1); }";
+
 
 
 
@@ -70,49 +80,49 @@ bool FBXLighting::startup() {
     glDeleteShader(fragmentShader);
 
 
-	return true;
+    return true;
 }
 
 void FBXLighting::shutdown() {
     cleanupOpenGLBuffers(m_fbx);
     glDeleteProgram(m_program);
 
-	// destroy our window properly
-	destroyWindow();
+    // destroy our window properly
+    destroyWindow();
 }
 
 bool FBXLighting::update(float deltaTime) {
-	
-	// close the application if the window closes
-	if (glfwWindowShouldClose(m_window) ||
-		glfwGetKey(m_window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-		return false;
 
-	// update the camera's movement
-	m_camera->update(deltaTime);
+    // close the application if the window closes
+    if (glfwWindowShouldClose(m_window) ||
+        glfwGetKey(m_window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+        return false;
 
-	// clear the gizmos out for this frame
-	Gizmos::clear();
+    // update the camera's movement
+    m_camera->update(deltaTime);
 
-	Gizmos::addTransform(glm::mat4(1));
+    // clear the gizmos out for this frame
+    Gizmos::clear();
 
-	// ...for now let's add a grid to the gizmos
-	for (int i = 0; i < 21; ++i) {
-		Gizmos::addLine(vec3(-10 + i, 0, 10), vec3(-10 + i, 0, -10),
-			i == 10 ? vec4(1, 1, 1, 1) : vec4(0, 0, 0, 1));
+    Gizmos::addTransform(glm::mat4(1));
 
-		Gizmos::addLine(vec3(10, 0, -10 + i), vec3(-10, 0, -10 + i),
-			i == 10 ? vec4(1, 1, 1, 1) : vec4(0, 0, 0, 1));
-	}
+    // ...for now let's add a grid to the gizmos
+    for (int i = 0; i < 21; ++i) {
+        Gizmos::addLine(vec3(-10 + i, 0, 10), vec3(-10 + i, 0, -10),
+            i == 10 ? vec4(1, 1, 1, 1) : vec4(0, 0, 0, 1));
 
-	// return true, else the application closes
-	return true;
+        Gizmos::addLine(vec3(10, 0, -10 + i), vec3(-10, 0, -10 + i),
+            i == 10 ? vec4(1, 1, 1, 1) : vec4(0, 0, 0, 1));
+    }
+
+    // return true, else the application closes
+    return true;
 }
 
 void FBXLighting::draw() {
 
-	// clear the screen for this frame
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    // clear the screen for this frame
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glUseProgram(m_program);
 
@@ -127,6 +137,12 @@ void FBXLighting::draw() {
     int lightColourLoc = glGetUniformLocation(m_program, "LightColour");
     glUniform3fv(lightColourLoc, 1, glm::value_ptr(glm::vec3(1, 0, 0)));
 
+    int cameraPosLocation = glGetUniformLocation(m_program, "CameraPos");
+    glUniform3fv(cameraPosLocation, 1, glm::value_ptr( glm::vec3(m_camera->getTransform()[3]) ));
+
+    int specularPowerLocation = glGetUniformLocation(m_program, "SpecPow");
+    glUniform1f(specularPowerLocation, 5.f);
+
     // bind our vertex array object and draw the mesh
     for (unsigned int i = 0; i < m_fbx->getMeshCount(); ++i) {
 
@@ -140,8 +156,8 @@ void FBXLighting::draw() {
     }
 
 
-	// display the 3D gizmos
-	Gizmos::draw(m_camera->getProjectionView());
+    // display the 3D gizmos
+    Gizmos::draw(m_camera->getProjectionView());
 }
 
 void FBXLighting::createOpenGLBuffers(FBXFile* fbx)
