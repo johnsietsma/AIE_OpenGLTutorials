@@ -34,18 +34,23 @@ bool FBXLighting::startup() {
 					layout(location=0) in vec4 Position; \
 					layout(location=1) in vec4 Normal; \
 					out vec4 vNormal; \
+					out vec4 vPosition; \
 					uniform mat4 ProjectionView; \
 					void main() { vNormal = Normal; \
+					vPosition = Position; \
                     gl_Position = ProjectionView*Position; }";
 
     const char* fsSource = "#version 410\n \
 					in vec4 vNormal; \
+					in vec4 vPosition; \
 					out vec4 FragColor; \
+					uniform vec3 LightDir; \
+					uniform vec3 LightColour; \
 					void main() { \
 					float d = max(0, \
-                    dot( normalize(vNormal.xyz), \
-                    vec3(0,1,0) ) ); \
-					FragColor = vec4(d,d,d,1); }";
+                    dot(normalize(vNormal.xyz),LightDir ) ); \
+					FragColor = vec4(LightColour * d,1); }";
+
 
 
     unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
@@ -115,6 +120,12 @@ void FBXLighting::draw() {
     int loc = glGetUniformLocation(m_program, "ProjectionView");
     glUniformMatrix4fv(loc, 1, GL_FALSE,
         &(m_camera->getProjectionView()[0][0]));
+
+    int lightDirLoc = glGetUniformLocation(m_program, "LightDir");
+    glUniform3fv(lightDirLoc, 1, glm::value_ptr(glm::vec3(0, 1, 0)));
+
+    int lightColourLoc = glGetUniformLocation(m_program, "LightColour");
+    glUniform3fv(lightColourLoc, 1, glm::value_ptr(glm::vec3(1, 0, 0)));
 
     // bind our vertex array object and draw the mesh
     for (unsigned int i = 0; i < m_fbx->getMeshCount(); ++i) {
