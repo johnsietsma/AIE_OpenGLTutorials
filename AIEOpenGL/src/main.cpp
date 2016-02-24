@@ -1,7 +1,7 @@
-#include "Blank.h"
-#include "FBXLighting.h"
-#include "RenderingGeometry.h"
-#include "Textures.h"
+#include "Tutorials/Blank.h"
+#include "Tutorials/FBXLighting.h"
+#include "Tutorials/RenderingGeometry.h"
+#include "Tutorials/Textures.h"
 
 #include <GLFW/glfw3.h>
 
