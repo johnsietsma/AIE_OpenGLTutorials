@@ -6,11 +6,11 @@ class Camera;
 
 class Textures : public BaseApplication {
 public:
-	virtual bool startup();
-	virtual void shutdown();
+	virtual bool startup() override;
+	virtual void shutdown() override;
 
-	virtual bool update(float deltaTime);
-	virtual void draw();
+	virtual bool update(float deltaTime) override;
+	virtual void draw() override;
 
 private:
 

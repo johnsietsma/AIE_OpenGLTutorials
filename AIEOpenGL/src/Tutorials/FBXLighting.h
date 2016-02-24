@@ -2,6 +2,8 @@
 
 #include "BaseApplication.h"
 
+#include <glm/vec3.hpp>
+
 class Camera;
 class FBXFile;
 
@@ -9,13 +11,15 @@ class FBXLighting : public BaseApplication {
 public:
 
     FBXLighting();
-	virtual ~FBXLighting();
+    virtual ~FBXLighting();
 
-	virtual bool startup();
-	virtual void shutdown();
+    virtual bool startup() override;
+    virtual void shutdown() override;
 
-	virtual bool update(float deltaTime);
-	virtual void draw();
+    virtual bool update(float deltaTime) override;
+    virtual void draw() override;
+    virtual void drawGUI() override;
+
 
 private:
     void createOpenGLBuffers(FBXFile* fbx);
@@ -23,7 +27,6 @@ private:
 
     FBXFile* m_fbx;
     unsigned int m_program;
-    unsigned int m_vao;
-    unsigned int m_vbo;
-    unsigned int m_ibo;
+
+    glm::vec3 m_lightDir;
 };

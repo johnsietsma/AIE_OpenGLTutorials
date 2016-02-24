@@ -58,3 +58,4 @@ ipch/
 
 dep/FBXLoader/FBXLoader.lib
 dep/FBXLoader/FBXLoader_d.lib
+imgui.ini

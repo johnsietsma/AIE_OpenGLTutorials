@@ -4,6 +4,7 @@
 #include "Camera.h"
 #include "FBXFile.h"
 #include "Gizmos.h"
+#include "imgui.h"
 
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
@@ -13,7 +14,9 @@ using glm::vec3;
 using glm::vec4;
 using glm::mat4;
 
-FBXLighting::FBXLighting() {
+FBXLighting::FBXLighting() :
+    m_lightDir(0,1,0)
+{
 
 }
 
@@ -119,6 +122,11 @@ bool FBXLighting::update(float deltaTime) {
     return true;
 }
 
+void FBXLighting::drawGUI()
+{
+    ImGui::ColorEdit3("Light Direction", glm::value_ptr(m_lightDir));
+}
+
 void FBXLighting::draw() {
 
     // clear the screen for this frame
@@ -132,7 +140,7 @@ void FBXLighting::draw() {
         &(m_camera->getProjectionView()[0][0]));
 
     int lightDirLoc = glGetUniformLocation(m_program, "LightDir");
-    glUniform3fv(lightDirLoc, 1, glm::value_ptr(glm::vec3(0, 1, 0)));
+    glUniform3fv(lightDirLoc, 1, glm::value_ptr(m_lightDir));
 
     int lightColourLoc = glGetUniformLocation(m_program, "LightColour");
     glUniform3fv(lightColourLoc, 1, glm::value_ptr(glm::vec3(1, 0, 0)));
