@@ -85,12 +85,12 @@ void BaseApplication::run() {
     while (currTime = glfwGetTime(),
         update((float)(currTime - prevTime))) {
 
-        ImGui_ImplGlfwGL3_NewFrame();
-
         glfwPollEvents();
-        draw();
-        drawGUI();
 
+        draw();
+
+        ImGui_ImplGlfwGL3_NewFrame();
+        drawGUI();
         ImGui::Render();
 
         glfwSwapBuffers(m_window);

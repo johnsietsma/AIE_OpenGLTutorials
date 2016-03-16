@@ -27,8 +27,10 @@
     <ClCompile Include="src\ImGUI\imgui_draw.cpp" />
     <ClCompile Include="src\ImGUI\imgui_impl_glfw_gl3.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Tutorials\AdvancedTexturing.cpp" />
     <ClCompile Include="src\Tutorials\Blank.cpp" />
     <ClCompile Include="src\Tutorials\FBXLighting.cpp" />
+    <ClCompile Include="src\Tutorials\GPGPU.cpp" />
     <ClCompile Include="src\Tutorials\RenderingGeometry.cpp" />
     <ClCompile Include="src\Tutorials\Textures.cpp" />
   </ItemGroup>
@@ -40,8 +42,10 @@
     <ClInclude Include="src\ImGUI\imconfig.h" />
     <ClInclude Include="src\ImGUI\imgui.h" />
     <ClInclude Include="src\ImGUI\imgui_impl_glfw_gl3.h" />
+    <ClInclude Include="src\Tutorials\AdvancedTexturing.h" />
     <ClInclude Include="src\Tutorials\Blank.h" />
     <ClInclude Include="src\Tutorials\FBXLighting.h" />
+    <ClInclude Include="src\Tutorials\GPGPU.h" />
     <ClInclude Include="src\Tutorials\RenderingGeometry.h" />
     <ClInclude Include="src\Tutorials\Textures.h" />
   </ItemGroup>

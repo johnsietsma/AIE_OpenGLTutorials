@@ -1,4 +1,6 @@
+#include "Tutorials/AdvancedTexturing.h"
 #include "Tutorials/Blank.h"
+#include "Tutorials/GPGPU.h"
 #include "Tutorials/FBXLighting.h"
 #include "Tutorials/RenderingGeometry.h"
 #include "Tutorials/Textures.h"
@@ -7,7 +9,7 @@
 
 int main() {
 	
-	BaseApplication* app = new FBXLighting();
+	BaseApplication* app = new AdvancedTexturing();
 	if (app->startup())
 		app->run();
 	app->shutdown();
