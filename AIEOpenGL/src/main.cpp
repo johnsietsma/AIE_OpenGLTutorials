@@ -10,14 +10,14 @@
 
 int main() {
 	
-	BaseApplication* app = new UtilitySystems();
+	/*BaseApplication* app = new UtilitySystems();
 	if (app->startup())
 		app->run();
-	app->shutdown();
+	app->shutdown();*/
 
-    //GPGPU gpgpu;
-    //gpgpu.runCPU();
-    //gpgpu.runGPU();
+    GPGPU gpgpu;
+    gpgpu.runCPU();
+    gpgpu.runGPU();
 
 	return 0;
 }
