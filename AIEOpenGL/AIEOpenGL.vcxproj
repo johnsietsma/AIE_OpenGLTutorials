@@ -42,6 +42,7 @@
     <ClInclude Include="src\ImGUI\imconfig.h" />
     <ClInclude Include="src\ImGUI\imgui.h" />
     <ClInclude Include="src\ImGUI\imgui_impl_glfw_gl3.h" />
+    <ClInclude Include="src\Timer.h" />
     <ClInclude Include="src\Tutorials\AdvancedTexturing.h" />
     <ClInclude Include="src\Tutorials\Blank.h" />
     <ClInclude Include="src\Tutorials\FBXLighting.h" />
@@ -103,8 +104,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)src/;$(SolutionDir)AIEOpenGL/src/ImGUI;$(SolutionDir)dep/glm;$(SolutionDir)dep/glfw/include;$(SolutionDir)dep/stb;$(SolutionDir)dep/FBXLoader;$(SolutionDir)dep/imgui;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)dep/FBXLoader;$(SolutionDir)dep/glfw/lib-vc2015;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
+    <IncludePath>$(ProjectDir)src/;$(SolutionDir)AIEOpenGL/src/ImGUI;$(SolutionDir)dep/glm;$(SolutionDir)dep/glfw/include;$(SolutionDir)dep/stb;$(SolutionDir)dep/FBXLoader;$(SolutionDir)dep/opencl/inc;$(SolutionDir)dep/imgui;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)dep/opencl/lib/Win32/x86;$(SolutionDir)dep/FBXLoader;$(SolutionDir)dep/glfw/lib-vc2015;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
     <OutDir>$(SolutionDir)bin\</OutDir>
     <TargetName>$(ProjectName)_d</TargetName>
   </PropertyGroup>
@@ -113,8 +114,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)src/;$(SolutionDir)AIEOpenGL/src/ImGUI;$(SolutionDir)dep/glm;$(SolutionDir)dep/glfw/include;$(SolutionDir)dep/stb;$(SolutionDir)dep/FBXLoader;$(SolutionDir)dep/imgui;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)dep/FBXLoader;$(SolutionDir)dep/glfw/lib-vc2015;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
+    <IncludePath>$(ProjectDir)src/;$(SolutionDir)AIEOpenGL/src/ImGUI;$(SolutionDir)dep/glm;$(SolutionDir)dep/glfw/include;$(SolutionDir)dep/stb;$(SolutionDir)dep/FBXLoader;$(SolutionDir)dep/opencl/inc;$(SolutionDir)dep/imgui;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)dep/opencl/lib/Win32/x86;$(SolutionDir)dep/FBXLoader;$(SolutionDir)dep/glfw/lib-vc2015;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
     <OutDir>$(SolutionDir)bin\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -131,7 +132,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>FBXLoader_d.lib;opengl32.lib;glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OpenCL.lib;FBXLoader_d.lib;opengl32.lib;glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -162,7 +163,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>FBXLoader.lib;opengl32.lib;glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OpenCL.lib;FBXLoader.lib;opengl32.lib;glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

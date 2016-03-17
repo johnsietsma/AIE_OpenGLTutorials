@@ -9,10 +9,14 @@
 
 int main() {
 	
-	BaseApplication* app = new AdvancedTexturing();
+	/*BaseApplication* app = new AdvancedTexturing();
 	if (app->startup())
 		app->run();
-	app->shutdown();
+	app->shutdown();*/
+
+    GPGPU gpgpu;
+    gpgpu.runCPU();
+    gpgpu.runGPU();
 
 	return 0;
 }

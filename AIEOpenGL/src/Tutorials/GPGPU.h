@@ -1,22 +1,20 @@
 #pragma once
+#include <CL\cl.h>
+#include <glm\vec4.hpp>
 
-#include "BaseApplication.h"
-
-class Camera;
-
-class GPGPU : public BaseApplication {
+class GPGPU  {
 public:
-	virtual bool startup() override;
-	virtual void shutdown() override;
+    GPGPU();
+    ~GPGPU();
 
-	virtual bool update(float deltaTime) override;
-	virtual void draw() override;
+    void runCPU();
+    void runGPU();
 
 private:
+    static const int VECTOR_COUNT = 5000000;
 
-    unsigned int m_texture;
-    unsigned int m_program;
-    unsigned int m_vao;
-    unsigned int m_vbo;
-    unsigned int m_ibo;
+    glm::vec4*          m_pVectors;
+
+    cl_platform_id		m_platform;
+    cl_device_id		m_device;
 };
