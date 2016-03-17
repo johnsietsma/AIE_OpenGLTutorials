@@ -128,6 +128,10 @@ void GPGPU::runGPU()
         if (result != CL_SUCCESS)
             printf("clEnqueueReadBuffer failed: %i\n", result);
 
+        // finish all opencl commands
+        clFlush(m_queue);
+        clFinish(m_queue);
+
         // how long did each event take?
         // get start / end profile data for the event
         cl_ulong clstartTime = 0;
@@ -150,12 +154,6 @@ void GPGPU::runGPU()
         // return time is in nanoseconds, so convert to seconds
         double clTime = (clendTime - clstartTime) * 1.0e-9;
         printf("GPU duration: %f\n", clTime);
-
-
-        // finish all opencl commands
-        clFlush(m_queue);
-        clFinish(m_queue);
-
     }
 
     clReleaseMemObject(m_buffer);

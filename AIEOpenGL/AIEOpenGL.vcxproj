@@ -33,6 +33,12 @@
     <ClCompile Include="src\Tutorials\GPGPU.cpp" />
     <ClCompile Include="src\Tutorials\RenderingGeometry.cpp" />
     <ClCompile Include="src\Tutorials\Textures.cpp" />
+    <ClCompile Include="src\Tutorials\UtilitySystems.cpp" />
+    <ClCompile Include="src\UtilitySystems\BaseNPC.cpp" />
+    <ClCompile Include="src\UtilitySystems\UtilityNPC.cpp" />
+    <ClCompile Include="src\UtilitySystems\UtilityScore.cpp" />
+    <ClCompile Include="src\UtilitySystems\UtilityValue.cpp" />
+    <ClCompile Include="src\UtilitySystems\World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\BaseApplication.h" />
@@ -49,6 +55,13 @@
     <ClInclude Include="src\Tutorials\GPGPU.h" />
     <ClInclude Include="src\Tutorials\RenderingGeometry.h" />
     <ClInclude Include="src\Tutorials\Textures.h" />
+    <ClInclude Include="src\Tutorials\UtilitySystems.h" />
+    <ClInclude Include="src\UtilitySystems\BaseNPC.h" />
+    <ClInclude Include="src\UtilitySystems\UtilityMaths.h" />
+    <ClInclude Include="src\UtilitySystems\UtilityNPC.h" />
+    <ClInclude Include="src\UtilitySystems\UtilityScore.h" />
+    <ClInclude Include="src\UtilitySystems\UtilityValue.h" />
+    <ClInclude Include="src\UtilitySystems\World.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{63494F4E-79FA-48AD-AA6C-BDF1FF1619FD}</ProjectGuid>
