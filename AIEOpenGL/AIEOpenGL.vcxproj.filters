@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ImGUI">
+      <UniqueIdentifier>{cd28666e-4e49-447e-80aa-c0693807f7f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tutorials">
+      <UniqueIdentifier>{8aa7fce1-ce1f-4d76-a328-e23619711d02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UtilitySystems">
+      <UniqueIdentifier>{70e9237d-a35f-45b4-aaea-c4e1b28e1ac3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Camera.h" />
+    <ClInclude Include="src\Gizmos.h" />
+    <ClInclude Include="src\gl_core_4_4.h" />
+    <ClInclude Include="src\Timer.h" />
+    <ClInclude Include="src\BaseApplication.h" />
+    <ClInclude Include="src\UtilitySystems\UtilityNPC.h">
+      <Filter>UtilitySystems</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UtilitySystems\UtilityScore.h">
+      <Filter>UtilitySystems</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UtilitySystems\UtilityValue.h">
+      <Filter>UtilitySystems</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UtilitySystems\World.h">
+      <Filter>UtilitySystems</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UtilitySystems\BaseNPC.h">
+      <Filter>UtilitySystems</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UtilitySystems\UtilityMaths.h">
+      <Filter>UtilitySystems</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ImGUI\imgui.h">
+      <Filter>ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ImGUI\imgui_impl_glfw_gl3.h">
+      <Filter>ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ImGUI\imgui_internal.h">
+      <Filter>ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ImGUI\imconfig.h">
+      <Filter>ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tutorials\FBXLighting.h">
+      <Filter>Tutorials</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tutorials\GPGPU.h">
+      <Filter>Tutorials</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tutorials\RenderingGeometry.h">
+      <Filter>Tutorials</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tutorials\Textures.h">
+      <Filter>Tutorials</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tutorials\UtilitySystems.h">
+      <Filter>Tutorials</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tutorials\AdvancedTexturing.h">
+      <Filter>Tutorials</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tutorials\Blank.h">
+      <Filter>Tutorials</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Gizmos.cpp" />
+    <ClCompile Include="src\gl_core_4_4.c" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\BaseApplication.cpp" />
+    <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\UtilitySystems\UtilityScore.cpp">
+      <Filter>UtilitySystems</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UtilitySystems\UtilityValue.cpp">
+      <Filter>UtilitySystems</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UtilitySystems\World.cpp">
+      <Filter>UtilitySystems</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UtilitySystems\BaseNPC.cpp">
+      <Filter>UtilitySystems</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UtilitySystems\UtilityNPC.cpp">
+      <Filter>UtilitySystems</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ImGUI\imgui_draw.cpp">
+      <Filter>ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ImGUI\imgui_impl_glfw_gl3.cpp">
+      <Filter>ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ImGUI\imgui.cpp">
+      <Filter>ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tutorials\FBXLighting.cpp">
+      <Filter>Tutorials</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tutorials\GPGPU.cpp">
+      <Filter>Tutorials</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tutorials\RenderingGeometry.cpp">
+      <Filter>Tutorials</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tutorials\Textures.cpp">
+      <Filter>Tutorials</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tutorials\UtilitySystems.cpp">
+      <Filter>Tutorials</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tutorials\AdvancedTexturing.cpp">
+      <Filter>Tutorials</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tutorials\Blank.cpp">
+      <Filter>Tutorials</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
