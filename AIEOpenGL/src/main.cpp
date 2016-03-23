@@ -9,15 +9,15 @@
 #include <GLFW/glfw3.h>
 
 int main() {
-	
-	/*BaseApplication* app = new UtilitySystems();
-	if (app->startup())
-		app->run();
-	app->shutdown();*/
 
-    GPGPU gpgpu;
-    gpgpu.runCPU();
-    gpgpu.runGPU();
+    BaseApplication* app = new UtilitySystems();
+    if (app->startup())
+        app->run();
+    app->shutdown();
+
+    //GPGPU gpgpu;
+    //gpgpu.runCPU();
+    //gpgpu.runGPU();
 
 	return 0;
 }
