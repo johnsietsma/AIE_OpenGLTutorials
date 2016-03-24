@@ -21,51 +21,51 @@ Blank::~Blank() {
 }
 
 bool Blank::startup() {
-	// create a basic window
-	createWindow("Tutorial - Blank", 1024, 768);
+    // create a basic window
+    createWindow("Tutorial - Blank", 1024, 768);
 
-	return true;
+    return true;
 }
 
 void Blank::shutdown() {
-	// destroy our window properly
-	destroyWindow();
+    // destroy our window properly
+    destroyWindow();
 }
 
 bool Blank::update(float deltaTime) {
-	
-	// close the application if the window closes
-	if (glfwWindowShouldClose(m_window) ||
-		glfwGetKey(m_window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-		return false;
 
-	// update the camera's movement
-	m_camera->update(deltaTime);
+    // close the application if the window closes
+    if (glfwWindowShouldClose(m_window) ||  glfwGetKey(m_window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+        return false;
 
-	// clear the gizmos out for this frame
-	Gizmos::clear();
+    // update the camera's movement
+    m_camera->update(deltaTime);
 
-	Gizmos::addTransform(glm::mat4(1));
+    // clear the gizmos out for this frame
+    Gizmos::clear();
 
-	// ...for now let's add a grid to the gizmos
-	for (int i = 0; i < 21; ++i) {
-		Gizmos::addLine(vec3(-10 + i, 0, 10), vec3(-10 + i, 0, -10),
-			i == 10 ? vec4(1, 1, 1, 1) : vec4(0, 0, 0, 1));
+    Gizmos::addTransform(glm::mat4(1));
 
-		Gizmos::addLine(vec3(10, 0, -10 + i), vec3(-10, 0, -10 + i),
-			i == 10 ? vec4(1, 1, 1, 1) : vec4(0, 0, 0, 1));
-	}
-
-	// return true, else the application closes
-	return true;
+    // return true, else the application closes
+    return true;
 }
 
 void Blank::draw() {
 
-	// clear the screen for this frame
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    // clear the screen for this frame
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
-	// display the 3D gizmos
-	Gizmos::draw(m_camera->getProjectionView());
+    // ...for now let's add a grid to the gizmos
+    for (int i = 0; i < 21; ++i) {
+        Gizmos::addLine(vec3(-10 + i, 0, 10), vec3(-10 + i, 0, -10),
+            i == 10 ? vec4(1, 1, 1, 1) : vec4(0, 0, 0, 1));
+
+        Gizmos::addLine(vec3(10, 0, -10 + i), vec3(-10, 0, -10 + i),
+            i == 10 ? vec4(1, 1, 1, 1) : vec4(0, 0, 0, 1));
+    }
+
+
+    // display the 3D gizmos
+    Gizmos::draw(m_camera->getProjectionView());
 }

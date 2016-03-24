@@ -153,7 +153,7 @@ Gizmos::~Gizmos() {
 }
 
 void Gizmos::create(unsigned int a_maxLines /* = 0xffff */, unsigned int a_maxTris /* = 0xffff */,
-					unsigned int a_max2DLines /* = 0xff */, unsigned int a_max2DTris /* = 0xff */) {
+					unsigned int a_max2DLines /* = 0xffff */, unsigned int a_max2DTris /* = 0xffff */) {
 	if (sm_singleton == nullptr)
 		sm_singleton = new Gizmos(a_maxLines,a_maxTris,a_max2DLines,a_max2DTris);
 }

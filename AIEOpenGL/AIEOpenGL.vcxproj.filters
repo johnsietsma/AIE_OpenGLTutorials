@@ -10,6 +10,9 @@
     <Filter Include="UtilitySystems">
       <UniqueIdentifier>{70e9237d-a35f-45b4-aaea-c4e1b28e1ac3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="NeuralNetwork">
+      <UniqueIdentifier>{60241611-7e52-44b4-8698-7c9c238002d7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Camera.h" />
@@ -68,6 +71,27 @@
     <ClInclude Include="src\Tutorials\Blank.h">
       <Filter>Tutorials</Filter>
     </ClInclude>
+    <ClInclude Include="src\NeuralNetwork\matrix.h">
+      <Filter>NeuralNetwork</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NeuralNetwork\NeuralNetwork.h">
+      <Filter>NeuralNetwork</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NeuralNetwork\Turret.h">
+      <Filter>NeuralNetwork</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NeuralNetwork\Agent.h">
+      <Filter>NeuralNetwork</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NeuralNetwork\Food.h">
+      <Filter>NeuralNetwork</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NeuralNetwork\LinearZone.h">
+      <Filter>NeuralNetwork</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tutorials\NNApplication.h">
+      <Filter>Tutorials</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Gizmos.cpp" />
@@ -118,6 +142,24 @@
       <Filter>Tutorials</Filter>
     </ClCompile>
     <ClCompile Include="src\Tutorials\Blank.cpp">
+      <Filter>Tutorials</Filter>
+    </ClCompile>
+    <ClCompile Include="src\NeuralNetwork\NeuralNetwork.cpp">
+      <Filter>NeuralNetwork</Filter>
+    </ClCompile>
+    <ClCompile Include="src\NeuralNetwork\Turret.cpp">
+      <Filter>NeuralNetwork</Filter>
+    </ClCompile>
+    <ClCompile Include="src\NeuralNetwork\Agent.cpp">
+      <Filter>NeuralNetwork</Filter>
+    </ClCompile>
+    <ClCompile Include="src\NeuralNetwork\Food.cpp">
+      <Filter>NeuralNetwork</Filter>
+    </ClCompile>
+    <ClCompile Include="src\NeuralNetwork\LinearZone.cpp">
+      <Filter>NeuralNetwork</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tutorials\NNApplication.cpp">
       <Filter>Tutorials</Filter>
     </ClCompile>
   </ItemGroup>
